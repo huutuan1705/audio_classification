@@ -15,7 +15,7 @@ def inference(model, test_dl, criterion):
     total_prediction = 0
     
     model.eval()
-    for i, data in tqdm(enumerate(test_dl)):
+    for i, data in enumerate(tqdm(test_dl)):
         inputs, labels = data[0].to(device), data[1].to(device)
          # Normalize the inputs
         inputs_m, inputs_s = inputs.mean(), inputs.std()
@@ -90,6 +90,8 @@ def training(model, train_dl, test_dl, num_epochs):
         test_accuracies.append(test_acc)
         test_losses.append(test_loss)
         
+        print("Epoch: {:1d}: Train accuracy: {:2f} Train loss: {:2f} | Test accuracy: {:2f} Test loss: {:2f}"
+              .format(epoch, avg_acc, avg_loss, test_acc, test_loss))
     return train_accuracies, train_losses, test_accuracies, test_losses
 
 if __name__ == "__main__":
