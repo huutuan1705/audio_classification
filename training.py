@@ -2,6 +2,7 @@ import tqdm
 import pandas as pd
 import torch
 import torch.nn as nn
+import tqdm 
 
 from torch.utils.data import DataLoader
 from resnet50 import ResNetModel
