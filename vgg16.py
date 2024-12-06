@@ -18,7 +18,7 @@ class n_conv(nn.Module):
         return self.conv(x)
     
 class VGG16(nn.Module):
-    def __init__(self, in_channels=3, out_channels=3, init_weights=True):
+    def __init__(self, in_channels=2, out_channels=3, init_weights=True):
         super(VGG16, self).__init__()
         self.conv1 = n_conv(in_channels,64)
         self.conv2 = n_conv(64,128)
