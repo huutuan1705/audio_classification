@@ -97,7 +97,7 @@ if __name__ == "__main__":
     df_test = pd.read_csv("train.csv")  
     data_path = ""
     
-    model = ResNetModel("resnet50", "mlp")
+    model = ResNetModel("resnet50", "mlp").to(device)
     train_ds = SoundDataset(df_train, data_path)
     test_ds = SoundDataset(df_test, data_path)
     
