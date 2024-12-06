@@ -51,7 +51,7 @@ def training(model, train_dl, test_dl, num_epochs):
     test_accuracies = []
     test_losses = []
     
-    for epoch, _ in range(num_epochs):
+    for epoch in range(num_epochs):
         train_loss = 0.0
         corret_prediction = 0
         total_prediction = 0
