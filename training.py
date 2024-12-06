@@ -22,10 +22,9 @@ def inference(model, test_dl, criterion):
         inputs = (inputs - inputs_m) / inputs_s
         
         outputs = model(inputs)
-        _, prediction = torch.max(outputs,1)
         
-        correct_prediction += (prediction == labels).sum().item()
-        total_prediction += prediction.shape[0]
+        correct_prediction += (outputs.argmax(1) == labels).sum().item()
+        total_prediction += labels.size(0)
         
         loss = criterion(outputs, labels)
         loss.backward()
@@ -71,14 +70,14 @@ def training(model, train_dl, test_dl, num_epochs):
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             loss.backward()
+            nn.utils.clip_grad_norm_(model.parameters(), 0.1)
             optimizer.step()
             scheduler.step()
             
             train_loss += loss.item()
-            _, prediction = torch.max(outputs, 1)
             
-            corret_prediction += (prediction == labels).sum().item()
-            total_prediction += prediction.shape[0]
+            corret_prediction += (outputs.argmax(1) == labels).sum().item()
+            total_prediction += labels.size(0)
         
         num_batches = len(train_dl)
         avg_loss = train_loss / num_batches
