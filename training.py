@@ -22,8 +22,9 @@ def inference(model, test_dl, criterion):
         inputs = (inputs - inputs_m) / inputs_s
         
         outputs = model(inputs)
+        _, prediction = torch.max(outputs,1)
         
-        correct_prediction += (outputs.argmax(1) == labels).sum().item()
+        correct_prediction += (prediction == labels).sum().item()
         total_prediction += labels.size(0)
         
         loss = criterion(outputs, labels)
@@ -57,11 +58,11 @@ def training(model, train_dl, test_dl, num_epochs):
         
         model.train()
         for i, data in enumerate(tqdm(train_dl)):
-            inputs, labels = data[0].to(device, dtype=torch.float32), data[1].to(device, dtype=torch.long)
+            inputs, labels = data[0].to(device), data[1].to(device)
             
             # Normalize the inputs
             inputs_m, inputs_s = inputs.mean(), inputs.std()
-            inputs = (inputs - inputs_m) / (inputs_s + 1e-7)
+            inputs = (inputs - inputs_m) / inputs_s
             
             # Zero the parameter gradients
             optimizer.zero_grad()
@@ -70,13 +71,13 @@ def training(model, train_dl, test_dl, num_epochs):
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             loss.backward()
-            nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.1)
             optimizer.step()
             scheduler.step()
             
             train_loss += loss.item()
+            _, prediction = torch.max(outputs, 1)
             
-            corret_prediction += (outputs.argmax(1) == labels).sum().item()
+            corret_prediction += (prediction == labels).sum().item()
             total_prediction += labels.size(0)
         
         num_batches = len(train_dl)
