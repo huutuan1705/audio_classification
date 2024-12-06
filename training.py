@@ -101,7 +101,7 @@ if __name__ == "__main__":
     train_ds = SoundDataset(df_train, data_path)
     test_ds = SoundDataset(df_test, data_path)
     
-    train_dl = DataLoader(train_ds, batch_size=8, shuffle=True)
-    test_dl = DataLoader(test_ds, batch_size=8, shuffle=False)
+    train_dl = DataLoader(train_ds, batch_size=2, shuffle=True)
+    test_dl = DataLoader(test_ds, batch_size=2, shuffle=False)
     
     training(model, train_dl, test_dl, 100)
