@@ -130,7 +130,7 @@ model_dict = {
 
 class ResNetModel(nn.Module):
     """backbone + projection head"""
-    def __init__(self, name='resnet50', head='mlp', feat_dim=128):
+    def __init__(self, name='resnet50', head='mlp', feat_dim=3):
         super(ResNetModel, self).__init__()
         model_fun, dim_in = model_dict[name]
         self.encoder = model_fun()
