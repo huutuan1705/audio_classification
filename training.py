@@ -1,4 +1,4 @@
-import tqdm
+from tqdm import tqdm
 import pandas as pd
 import torch
 import torch.nn as nn
@@ -57,7 +57,7 @@ def training(model, train_dl, test_dl, num_epochs):
         total_prediction = 0
         
         model.train()
-        for i, data in tqdm(enumerate(train_dl)):
+        for i, data in enumerate(tqdm(train_dl)):
             inputs, labels = data[0].to(device), data[1].to(device)
             
             # Normalize the inputs
