@@ -70,7 +70,7 @@ def training(model, train_dl, test_dl, num_epochs):
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             loss.backward()
-            nn.utils.clip_grad_norm_(model.parameters(), 0.1)
+            # nn.utils.clip_grad_norm_(model.parameters(), 0.1)
             optimizer.step()
             scheduler.step()
             
